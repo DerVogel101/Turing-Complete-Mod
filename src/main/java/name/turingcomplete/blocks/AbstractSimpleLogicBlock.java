@@ -52,7 +52,7 @@ public abstract class AbstractSimpleLogicBlock extends AbstractLogicBlock{
         //update input state, becuase inputs have moved
         onInputChange(world,pos,state);
 
-        return ActionResult.SUCCESS_NO_ITEM_USED;
+        return ActionResult.SUCCESS;
     }
 
     protected int getOutputDelay(BlockState gateState) {

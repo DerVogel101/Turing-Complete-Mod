@@ -159,7 +159,7 @@ public class BiDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         //prevent stuck strong-power when mirroring
         updateOldSideBlock(world,pos,state);
 
-        return ActionResult.SUCCESS_NO_ITEM_USED;
+        return ActionResult.SUCCESS;
     }
 
     protected final void updateFrontOutput(World world, BlockPos gatePos, BlockState gateState){
