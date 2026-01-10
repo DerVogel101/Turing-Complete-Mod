@@ -46,7 +46,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
             // Updates Above And Bellow Blocks
             for (Direction direction : Direction.Type.VERTICAL) {
-                world.updateNeighborsAlways(pos.offset(direction), this);
+                world.updateNeighborsAlways(pos.offset(direction), this, null);
             }
 
             // Updates Blocks Horizontally
@@ -62,7 +62,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
             // Update Nearby Blocks
             for (Direction direction : DIRECTIONS)
-                world.updateNeighborsAlways(pos.offset(direction), this);
+                world.updateNeighborsAlways(pos.offset(direction), this, null);
 
             // Update This AnD Other Wires
             this.update(world, pos, state);
@@ -115,16 +115,16 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         if (!(world.getBlockState(pos).isOf(this) || world.getBlockState(pos).isOf(Blocks.REDSTONE_WIRE)))
             return;
 
-        world.updateNeighborsAlways(pos, this);
+        world.updateNeighborsAlways(pos, this, null);
 
         for(Direction direction : DIRECTIONS)
-            world.updateNeighborsAlways(pos.offset(direction), this);
+            world.updateNeighborsAlways(pos.offset(direction), this,null);
     }
 
     private void updateTarget(World world, BlockPos pos,Direction direction) {
         BlockPos blockPos = pos.offset(direction.getOpposite());
-        world.updateNeighbor(blockPos, this, pos);
-        world.updateNeighborsExcept(blockPos, this, direction);
+        world.updateNeighbor(blockPos, this, null);
+        world.updateNeighborsExcept(blockPos, this, direction, null);
     }
 
     // On Neighbor Update
