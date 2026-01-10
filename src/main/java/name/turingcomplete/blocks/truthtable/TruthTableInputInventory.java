@@ -3,7 +3,7 @@ package name.turingcomplete.blocks.truthtable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeMatcher;
+import net.minecraft.recipe.RecipeFinder;
 import net.minecraft.util.collection.DefaultedList;
 
 import java.util.List;
@@ -86,7 +86,7 @@ public class TruthTableInputInventory implements RecipeInputInventory {
     }
 
     @Override
-    public void provideRecipeInputs(RecipeMatcher finder) {
+    public void provideRecipeInputs(RecipeFinder finder) {
         for (ItemStack stack : stacks){
             finder.addInput(stack);
         }
