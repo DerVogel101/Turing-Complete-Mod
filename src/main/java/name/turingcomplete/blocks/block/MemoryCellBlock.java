@@ -76,7 +76,6 @@ public class MemoryCellBlock extends AbstractSimpleGate {
     private RelativeSide getEnabledSide(BlockState state){
         return state.get(MIRRORED) ? RelativeSide.RIGHT : RelativeSide.LEFT;
     }
-
     @Override
     public void appendTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
         tooltip.add(Text.translatable("block.turingcomplete.memory_cell_gate.tooltip").formatted(Formatting.RED).formatted(Formatting.ITALIC));
