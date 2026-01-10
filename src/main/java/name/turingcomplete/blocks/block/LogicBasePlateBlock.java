@@ -25,7 +25,6 @@ public class LogicBasePlateBlock extends HorizontalFacingBlock {
         setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
     }
 
-    @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         if(!canPlaceAt(state,world,pos)){
             BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
@@ -34,7 +33,7 @@ public class LogicBasePlateBlock extends HorizontalFacingBlock {
             world.removeBlock(pos, false);
 
             for (Direction direction : DIRECTIONS)
-                world.updateNeighborsAlways(pos.offset(direction), this);
+                world.updateNeighborsAlways(pos.offset(direction), this, null);
 
         }
     }
