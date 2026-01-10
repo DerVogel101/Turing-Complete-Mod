@@ -3,6 +3,7 @@ package name.turingcomplete.blocks.block;
 import name.turingcomplete.blocks.AbstractLogicBlock;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
@@ -54,21 +55,25 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         }
     }
 
-    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!moved && !state.isOf(newState.getBlock())) {
-            super.onStateReplaced(state, world, pos, newState, false);
-            // If World Is Client World, Ignore Rest Of Code
-            if(world.isClient()) return;
+    public void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved, BlockState newState) {
+        if (!state.isOf(newState.getBlock())) {
+            // Super aufrufen
+            super.onStateReplaced(state, world, pos, moved);
 
-            // Update Nearby Blocks
-            for (Direction direction : DIRECTIONS)
-                world.updateNeighborsAlways(pos.offset(direction), this, null);
+            // Server-only Logik
+            if (!(world instanceof ServerWorld serverWorld)) return;
 
-            // Update This AnD Other Wires
-            this.update(world, pos, state);
-            this.updateNeighborsHorizontally(world, pos);
+            // Nearby Blocks updaten
+            for (Direction direction : Direction.values()) {
+                serverWorld.updateNeighborsAlways(pos.offset(direction), this, null);
+            }
+
+            // Wires / Logic Block updaten
+            this.update(serverWorld, pos, state);
+            this.updateNeighborsHorizontally(serverWorld, pos);
         }
     }
+
 
 
     //=============================================
@@ -207,8 +212,12 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
     public static int getWireColor(BlockState state, IntProperty property) {
         Vec3d vec3d = COLORS[state.get(property)];
-        return MathHelper.packRgb((float)vec3d.getX(), (float)vec3d.getY(), (float)vec3d.getZ());
+        int r = (int) (vec3d.x * 255.0);
+        int g = (int) (vec3d.y * 255.0);
+        int b = (int) (vec3d.z * 255.0);
+        return (r << 16) | (g << 8) | b;
     }
+
 
     @Override
     protected int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
