@@ -1,4 +1,4 @@
-# TuringCompleteMod
+# TuringCompleteMod Fabric 1.21.11
 This Minecraft mod adds the basic Logic Gates to the game! These logic gates are the following: NAND Gate, NOT Gate, AND Gate, OR Gate, XOR Gate, NOR Gate and XNOR Gate.
 
 The crafting recipes for the gates are a hint to how the gates work, built out of NAND Gates. For example, the AND Gate is the opposite result of the NAND Gate, so the crafting recipe is as follows:
