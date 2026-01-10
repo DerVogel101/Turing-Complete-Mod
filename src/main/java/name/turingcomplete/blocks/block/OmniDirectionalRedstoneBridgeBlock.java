@@ -40,7 +40,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     }
 
     protected void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (!oldState.isOf(state.getBlock()) && !world.isClient) {
+        if (!oldState.isOf(state.getBlock()) && !world.isClient()) {
             // Updates This Block
             this.update(world, pos, state);
 
@@ -58,7 +58,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         if (!moved && !state.isOf(newState.getBlock())) {
             super.onStateReplaced(state, world, pos, newState, false);
             // If World Is Client World, Ignore Rest Of Code
-            if(world.isClient) return;
+            if(world.isClient()) return;
 
             // Update Nearby Blocks
             for (Direction direction : DIRECTIONS)
@@ -130,7 +130,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     // On Neighbor Update
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (world.isClient) return;
+        if (world.isClient()) return;
 
         if (state.canPlaceAt(world, pos)) {
             this.update(world, pos, state);
