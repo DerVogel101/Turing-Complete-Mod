@@ -4,6 +4,7 @@ import name.turingcomplete.TuringComplete;
 import name.turingcomplete.blocks.truthtable.TruthTableScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -41,7 +42,7 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         int x = (this.width - this.backgroundWidth) / 2;
         int y = (this.height - this.backgroundHeight) / 2;
-        context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
 
         for (int i = 0; i < SLOT_POSITIONS.size(); i++){
             Slot slot = this.handler.slots.get(i);
@@ -53,7 +54,7 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
             if (!slot.hasStack()){
                 Identifier bgTex = SLOT_TEXTURES.get(i);
                 if (bgTex != null){
-                    context.drawTexture(bgTex, m, n, 0, 0, 16, 16, 16, 16);
+                    context.drawTexture(RenderPipelines.GUI_TEXTURED, bgTex, m, n, 0, 0, 16, 16, 16, 16);
                 }
             }
         }
@@ -79,9 +80,9 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
                 m = 113;
             }
             // Does match proper values, ignoring m, that likely needs tweaking
-            context.drawGuiTexture(SCROLL_BAR,x+106, y+7+m, 0, 6, 27);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, SCROLL_BAR, x+106, y+7+m, 6, 27);
         } else {
-            context.drawGuiTexture(SCROLL_BAR_DISABLED,x+106, y+7, 0, 6, 27);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, SCROLL_BAR_DISABLED, x+106, y+7, 6, 27);
         }
     }
 
