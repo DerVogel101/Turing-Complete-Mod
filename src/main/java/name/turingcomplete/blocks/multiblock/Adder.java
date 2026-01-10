@@ -2,6 +2,7 @@ package name.turingcomplete.blocks.multiblock;
 
 import java.util.List;
 
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 
@@ -286,8 +287,8 @@ public final class Adder extends AbstractLogicMultiblock{
         //redstone dust hasn't been redirected yet, so must schedule unconditionally
         world.scheduleBlockTick(pos,this, gate_delay, TickPriority.VERY_HIGH);
         //update parts because otherwise their input states won't update
-        world.updateNeighbor(aPos, this, pos);
-        world.updateNeighbor(bPos, this, pos);
+        world.updateNeighbor(aPos, this, null);
+        world.updateNeighbor(bPos, this, null);
     }
 
     @Override
@@ -455,7 +456,7 @@ public final class Adder extends AbstractLogicMultiblock{
         BlockPos targetPos = aPos.offset(outputSide.withBackDirection(facing));
 
          //don't update ourself
-         world.updateNeighborsExcept(targetPos, this, oldOutputDirection.getOpposite());
+         world.updateNeighborsExcept(targetPos, this, oldOutputDirection.getOpposite(), null);
     }
 
     public enum AdderPart implements StringIdentifiable {
