@@ -67,8 +67,9 @@ public class SwitchGateBlock extends AbstractSimpleGate {
         return state.get(MIRRORED) ? RelativeSide.RIGHT : RelativeSide.LEFT;
     }
 
-    @Override
-    public void appendTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        tooltip.add(Text.translatable("block.turingcomplete.switch_gate_block.tooltip").formatted(Formatting.RED).formatted(Formatting.ITALIC));
-    }
+//  TODO: Update tooltip method for new MC versions
+//    @Override
+//    public void appendTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
+//        tooltip.add(Text.translatable("block.turingcomplete.switch_gate_block.tooltip").formatted(Formatting.RED).formatted(Formatting.ITALIC));
+//    }
 }
