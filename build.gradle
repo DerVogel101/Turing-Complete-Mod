@@ -31,7 +31,9 @@ loom {
 }
 
 fabricApi {
-	configureDataGeneration()
+	configureDataGeneration() {
+		client = true
+	}
 }
 
 //you can comment this out temporarily if you've already run datagen and you're sure you haven't changed datagen
