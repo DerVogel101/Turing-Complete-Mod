@@ -93,7 +93,7 @@ public class TruthTableScreenHandler extends ScreenHandler {
         super.onClosed(player);
 
         // Only do this on the server side
-        if (!player.getWorld().isClient) {
+        if (!player.getEntityWorld().isClient()) {
             // Loop through your input slots
             for (int i = 0; i < input.size(); i++) {
                 ItemStack stack = input.removeStack(i);

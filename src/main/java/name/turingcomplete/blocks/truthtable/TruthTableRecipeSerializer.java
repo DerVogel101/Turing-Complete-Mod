@@ -1,38 +1,45 @@
 package name.turingcomplete.blocks.truthtable;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TruthTableRecipeSerializer implements RecipeSerializer<TruthTableRecipe> {
-    public static TruthTableRecipeSerializer INSTANCE = new TruthTableRecipeSerializer();
+    public static final TruthTableRecipeSerializer INSTANCE = new TruthTableRecipeSerializer();
     public static final Identifier ID = Identifier.of("turingcomplete","truth_table");
 
+    // MapCodec for JSON serialization using RecordCodecBuilder
+    public static final MapCodec<TruthTableRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+        Identifier.CODEC.fieldOf("id").forGetter(TruthTableRecipe::getId),
+        ItemStack.CODEC.fieldOf("output").forGetter(TruthTableRecipe::getOutput),
+        ItemStack.CODEC.fieldOf("input1").forGetter(TruthTableRecipe::getInput1),
+        ItemStack.CODEC.fieldOf("input2").forGetter(TruthTableRecipe::getInput2),
+        ItemStack.CODEC.fieldOf("input3").forGetter(TruthTableRecipe::getInput3),
+        ItemStack.CODEC.fieldOf("input4").forGetter(TruthTableRecipe::getInput4)
+    ).apply(instance, TruthTableRecipe::new));
+
+    // PacketCodec for network packet serialization
+    public static final PacketCodec<RegistryByteBuf, TruthTableRecipe> PACKET_CODEC = PacketCodec.tuple(
+        Identifier.PACKET_CODEC, TruthTableRecipe::getId,
+        ItemStack.PACKET_CODEC, TruthTableRecipe::getOutput,
+        ItemStack.PACKET_CODEC, TruthTableRecipe::getInput1,
+        ItemStack.PACKET_CODEC, TruthTableRecipe::getInput2,
+        ItemStack.PACKET_CODEC, TruthTableRecipe::getInput3,
+        ItemStack.PACKET_CODEC, TruthTableRecipe::getInput4,
+        TruthTableRecipe::new
+    );
+
     @Override
-    public TruthTableRecipe read(Identifier recipeId, JsonObject json){
-        List<ItemStack> inputs = new ArrayList<>();
-        if (!json.has("inputs")){
-            throw new JsonSyntaxException("Missing 'inputs' array for truth table recipe " + recipeId );
-        }
-        JsonArray inArray = json.getAsJsonArray("inputs");
-        for (JsonElement elem : inArray){
-            if (!elem.isJsonObject()){
-                throw new JsonSyntaxException("Invalid element in 'inputs' array for " + recipeId);
-            }
-            JsonObject inObj = elem.getAsJsonObject();
+    public MapCodec<TruthTableRecipe> codec() {
+        return CODEC;
+    }
 
-            if (!inObj.has("item")){
-                throw new JsonSyntaxException("Missing item in input for " + recipeId);
-            }
-        }
-
+    @Override
+    public PacketCodec<RegistryByteBuf, TruthTableRecipe> packetCodec() {
+        return PACKET_CODEC;
     }
 }

@@ -1,15 +1,17 @@
 package name.turingcomplete.blocks.truthtable;
 
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.IngredientPlacement;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.book.RecipeBookCategory;
+import net.minecraft.recipe.book.RecipeBookCategories;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-public class TruthTableRecipe implements Recipe<Inventory> {
+public class TruthTableRecipe implements Recipe<TruthTableRecipeInput> {
     private final Identifier id;
     private final ItemStack output;
     private final ItemStack input1;
@@ -30,34 +32,37 @@ public class TruthTableRecipe implements Recipe<Inventory> {
     public ItemStack getInput2() { return input2; }
     public ItemStack getInput3() { return input3; }
     public ItemStack getInput4() { return input4; }
+    public Identifier getId() { return id; }
+    public ItemStack getOutput() { return output; }
 
     @Override
-    public boolean matches(Inventory input, World world) {
+    public boolean matches(TruthTableRecipeInput input, World world) {
+        // Implement your matching logic here
         return false;
     }
 
     @Override
-    public ItemStack craft(Inventory input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(TruthTableRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
         return output.copy();
     }
 
     @Override
-    public boolean fits(int width, int height) {
-        return true;
+    public RecipeSerializer<? extends Recipe<TruthTableRecipeInput>> getSerializer() {
+        return TruthTableRecipeSerializer.INSTANCE;
     }
 
     @Override
-    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
-        return output;
+    public RecipeType<? extends Recipe<TruthTableRecipeInput>> getType() {
+        return TruthTableRecipeType.INSTANCE;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return TruthTableSeralizer.INSTANCE;
+    public RecipeBookCategory getRecipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     @Override
-    public RecipeType<?> getType() {
-        return (RecipeType<?>) TruthTableRecipeType.INSTANCE;
+    public IngredientPlacement getIngredientPlacement() {
+        return IngredientPlacement.NONE;
     }
 }
