@@ -294,19 +294,23 @@ public final class Adder extends AbstractLogicMultiblock{
     @Override
     @MustBeInvokedByOverriders
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        BlockPos mainPos = getMainPos(world, state, pos);
-        BlockState mainState = world.getBlockState(mainPos);
-        if(mainState.get(POWERED)) {
-            //need to change blockstate so that getWeakRedstonePower returns 0
-            world.setBlockState(mainPos, mainState.with(POWERED,false));
-            updateSumBlock(world, mainPos, mainState);
-        }
-        BlockPos bPos = getBPos(world, mainPos, mainState);
-        BlockState bState = world.getBlockState(bPos);
-        if(bState.get(CARRY)) {
-            //need to change blockstate so that getWeakRedstonePower returns 0
-            world.setBlockState(bPos, bState.with(POWERED,false));
-            updateCarryOutBlock(world, mainPos, mainState);
+        try {
+            BlockPos mainPos = getMainPos(world, state, pos);
+            BlockState mainState = world.getBlockState(mainPos);
+            if(mainState.get(POWERED)) {
+                //need to change blockstate so that getWeakRedstonePower returns 0
+                world.setBlockState(mainPos, mainState.with(POWERED,false));
+                updateSumBlock(world, mainPos, mainState);
+            }
+            BlockPos bPos = getBPos(world, mainPos, mainState);
+            BlockState bState = world.getBlockState(bPos);
+            if(bState.get(CARRY)) {
+                //need to change blockstate so that getWeakRedstonePower returns 0
+                world.setBlockState(bPos, bState.with(POWERED,false));
+                updateCarryOutBlock(world, mainPos, mainState);
+            }
+        } catch (IllegalArgumentException e) {
+            TuringComplete.LOGGER.warn("could not get main pos when breaking adder at {}", pos, e);
         }
         return super.onBreak(world, pos, state, player);
     }
