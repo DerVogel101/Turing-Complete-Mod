@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks;
 
+import name.turingcomplete.TuringComplete;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 

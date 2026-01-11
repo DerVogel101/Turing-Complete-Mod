@@ -1,11 +1,14 @@
 package name.turingcomplete.blocks.block;
 
+import com.mojang.serialization.MapCodec;
 import name.turingcomplete.blocks.AbstractSimpleGate;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SRLatchBlock extends AbstractSimpleGate {
+    public static final MapCodec<SRLatchBlock> CODEC = Block.createCodec(SRLatchBlock::new);
 
     public SRLatchBlock(Settings settings) {
         super(settings);

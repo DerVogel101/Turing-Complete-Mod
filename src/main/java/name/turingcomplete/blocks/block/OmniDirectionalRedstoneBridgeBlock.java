@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks.block;
 
+import com.mojang.serialization.MapCodec;
 import name.turingcomplete.blocks.AbstractLogicBlock;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
@@ -15,8 +16,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
 
 public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
+    public static final MapCodec<OmniDirectionalRedstoneBridgeBlock> CODEC = Block.createCodec(OmniDirectionalRedstoneBridgeBlock::new);
     private static final IntProperty POWER_Z;
     private static final IntProperty POWER_X;
 
@@ -134,7 +137,8 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
     // On Neighbor Update
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, WireOrientation sourcePos, boolean notify) {
+
         if (world.isClient()) return;
 
         if (state.canPlaceAt(world, pos)) {
@@ -143,6 +147,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
             dropStacks(state, world, pos);
             world.removeBlock(pos, false);
         }
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
     }
 
     //=============================================

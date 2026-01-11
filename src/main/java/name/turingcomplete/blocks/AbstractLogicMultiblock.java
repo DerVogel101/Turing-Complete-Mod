@@ -144,7 +144,7 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
             World world,
             BlockPos pos,
             Block sourceBlock,
-            BlockPos sourcePos,
+            WireOrientation sourcePos,
             boolean notify
     ) {
         if (!canPlaceAt(state, world, pos)) {

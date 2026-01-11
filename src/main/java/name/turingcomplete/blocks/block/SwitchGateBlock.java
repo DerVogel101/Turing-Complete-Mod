@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks.block;
 
+import com.mojang.serialization.MapCodec;
 import name.turingcomplete.blocks.AbstractSimpleGate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,6 +19,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class SwitchGateBlock extends AbstractSimpleGate {
+    public static final MapCodec<SwitchGateBlock> CODEC = Block.createCodec(SwitchGateBlock::new);
     public static final BooleanProperty ENABLED = Properties.ENABLED;
     public SwitchGateBlock(Settings settings) {
         super(settings);

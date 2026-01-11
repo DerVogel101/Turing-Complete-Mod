@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks.block;
 
+import name.turingcomplete.TuringComplete;
 import name.turingcomplete.blocks.AbstractSimpleGate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -8,6 +9,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
 
 public class TLatchBlock extends AbstractSimpleGate {
     protected static final BooleanProperty WAS_TOGGLED = BooleanProperty.of("was_toggled");
@@ -36,14 +38,15 @@ public class TLatchBlock extends AbstractSimpleGate {
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, WireOrientation sourcePos, boolean notify) {
+        TuringComplete.LOGGER.warn("TLatchBlock neighborUpdate called");
         boolean toggle = getInputActive(world, pos, state,RelativeSide.BACK);
         if (!toggle) {
             //don't notify neighbors, because they should not care about this
             //"listeners" includes server -> client communication, so is probably still needed
             world.setBlockState(pos, state.with(WAS_TOGGLED, false),Block.NOTIFY_LISTENERS);
         }
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
     }
 
     @Override

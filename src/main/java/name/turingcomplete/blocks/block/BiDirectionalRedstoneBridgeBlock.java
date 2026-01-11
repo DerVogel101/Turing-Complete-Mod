@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks.block;
 
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 import name.turingcomplete.blocks.AbstractLogicBlock;
@@ -123,8 +124,8 @@ public class BiDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, WireOrientation sourcePos, boolean notify) {
+
         boolean side_input_active = getCrossInputActive(world,pos,state);
         boolean back_input_active = getInputActive(world, pos, state, RelativeSide.BACK);
 
@@ -135,6 +136,7 @@ public class BiDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
             world.scheduleBlockTick(pos, this, gate_delay, TickPriority.VERY_HIGH);
         }
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
     }
 
     @Override

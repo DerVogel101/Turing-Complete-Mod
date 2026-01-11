@@ -16,16 +16,19 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 public class LogicBasePlateBlock extends HorizontalFacingBlock {
+    public static final MapCodec<LogicBasePlateBlock> CODEC = Block.createCodec(LogicBasePlateBlock::new);
     public LogicBasePlateBlock(Settings settings) {
         super(settings);
 
         setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
     }
 
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    @Override
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, WireOrientation sourcePos, boolean notify) {
         if(!canPlaceAt(state,world,pos)){
             BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
             dropStacks(state, world, pos, blockEntity);

@@ -1,11 +1,14 @@
 package name.turingcomplete.blocks.block;
 
+import com.mojang.serialization.MapCodec;
 import name.turingcomplete.blocks.AbstractSimpleGate;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ANDGateBlock extends AbstractSimpleGate{
+    public static final MapCodec<ANDGateBlock> CODEC = Block.createCodec(ANDGateBlock::new);
 
     public ANDGateBlock(Settings settings) {super(settings);}
 

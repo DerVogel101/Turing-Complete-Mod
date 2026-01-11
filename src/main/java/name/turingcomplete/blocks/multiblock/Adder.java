@@ -2,6 +2,7 @@ package name.turingcomplete.blocks.multiblock;
 
 import java.util.List;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;

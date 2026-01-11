@@ -1,5 +1,7 @@
 package name.turingcomplete.blocks;
 
+import name.turingcomplete.TuringComplete;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,13 +63,13 @@ public abstract class AbstractSimpleLogicBlock extends AbstractLogicBlock{
 
     @Override
     @MustBeInvokedByOverriders
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, WireOrientation sourcePos, boolean notify) {
         //check for superclass state changes
         state = world.getBlockState(pos);
         if (state.isOf(this)) {
             onInputChange(world,pos,state);
         }
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
     }
 
     @Override

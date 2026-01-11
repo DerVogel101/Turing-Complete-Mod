@@ -1,13 +1,15 @@
 package name.turingcomplete.blocks.block;
 
+import com.mojang.serialization.MapCodec;
 import name.turingcomplete.blocks.AbstractSimpleGate;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
 public class ORGateBlock extends AbstractSimpleGate {
-
+    public static final MapCodec<ORGateBlock> CODEC = Block.createCodec(ORGateBlock::new);
     public ORGateBlock(Settings settings) {
         super(settings);
     }

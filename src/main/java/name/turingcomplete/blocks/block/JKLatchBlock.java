@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.StateManager;
@@ -8,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class JKLatchBlock extends SRLatchBlock {
+    public static final MapCodec<JKLatchBlock> CODEC = Block.createCodec(JKLatchBlock::new);
     protected static final BooleanProperty WAS_TOGGLED = BooleanProperty.of("was_toggled");
 
     public JKLatchBlock(Settings settings) {

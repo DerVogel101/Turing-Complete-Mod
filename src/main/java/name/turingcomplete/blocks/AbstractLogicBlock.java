@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks;
 
+import name.turingcomplete.TuringComplete;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 import com.mojang.serialization.MapCodec;
@@ -23,7 +24,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.block.WireOrientation;
-import org.jetbrains.annotations.Nullable;
 
 // anything on a logic plate
 public abstract class AbstractLogicBlock
@@ -40,7 +40,8 @@ public abstract class AbstractLogicBlock
     }
 
     // allow immediate block state changes in response to input
-    protected void onInputChange(World world, BlockPos gatePos, BlockState gateState) {}
+    protected void onInputChange(World world, BlockPos gatePos, BlockState gateState) {
+    }
 
     protected int getInputStrength(World world, BlockPos pos, BlockState state, RelativeSide inputSide) {
         Direction checkDirection = inputSide.withBackDirection(state.get(FACING));
@@ -139,13 +140,14 @@ public abstract class AbstractLogicBlock
         return false;
     }
 
+    @Override
     @MustBeInvokedByOverriders
     protected void neighborUpdate(
             BlockState state,
             World world,
             BlockPos pos,
             Block sourceBlock,
-            BlockPos sourcePos,
+            WireOrientation sourcePos,
             boolean notify
     ) {
         if (!canPlaceAt(state, world, pos)) {

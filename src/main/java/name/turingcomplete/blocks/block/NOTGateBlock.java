@@ -1,5 +1,7 @@
 package name.turingcomplete.blocks.block;
 
+import com.mojang.serialization.MapCodec;
+import net.minecraft.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 import name.turingcomplete.blocks.AbstractSimpleGate;
@@ -11,7 +13,7 @@ import net.minecraft.world.World;
 
 
 public class NOTGateBlock extends AbstractSimpleGate {
-
+    public static final MapCodec<NOTGateBlock> CODEC = Block.createCodec(NOTGateBlock::new);
     public NOTGateBlock(Settings settings) {
         super(settings);
     }
